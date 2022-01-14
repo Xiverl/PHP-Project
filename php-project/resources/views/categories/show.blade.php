@@ -1,0 +1,43 @@
+@extends('layouts.app')
+
+@section('content')
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+          <a href="{{ route('home.create_topic') }}" class="btn btn-default pull-right">Создать подтему</a>
+          <br>
+          <br>
+
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <b>{{ $category->name }}</b><span class="pull-right glyphicon glyphicon-pushpin"></span>
+            </div>
+
+            @if (count($topics) == null)
+                <div class="panel-body">
+                    Have no post 
+                </div>
+            @endif    
+
+            @foreach($topics as $topic)
+                <ul class="list-group">
+                  <a href="/topics.show?id={{ $topic->id }}" class="list-group-item" style="padding:10px 1px">
+                    <div class="col-md-10 col-xs-9">
+                      {{ $topic->title }} <br>
+                        @for ($i = 0; $i < $topic->averageRating ; $i++)
+                          <i class="glyphicon glyphicon-star" style="color:#f6e729;"></i>
+                        @endfor
+                    </div>
+                    <p style="font-size:12px;margin-top:2px;" class="">
+                      <span class="fa fa-comments"></span> : {{ count($topic->comments) }} Replies <br>
+                      <span class="glyphicon glyphicon-eye-open"></span> : {{ $topic->views }} Views
+                    </p>
+                  </a>
+                </ul>
+            @endforeach
+          </div>
+          <span class="pull-right">{!! $topics->links() !!}</span>
+        </div>
+    </div>
+</div>
+@endsection
